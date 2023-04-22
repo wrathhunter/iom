@@ -4,9 +4,9 @@ import { UserServiceService } from '../user-service.service';
 
 export interface PeriodicElement {
   position: number;
-  service: Service;
-  branch: ServiceBranch[];
-  deployed: ServiceBranch;
+  service: string;
+  branch: string[];
+  deployed: string;
   status:string
 }
 
@@ -57,9 +57,9 @@ export class DashboardComponent implements OnInit {
             const deployedBranchName = deployed ? deployed : {_id: '',name: '',state: '',deployed: false,};
               this.ELEMENT_DATA.push({
                 position: this.ELEMENT_DATA.length + 1,
-                service: service,
-                branch:service.branches,
-                deployed: deployedBranchName,
+                service: service.name,
+                branch:service.branches.map(branch => branch.name),
+                deployed: deployedBranchName.name,
                 status: deployedBranchName.state 
               });
             
