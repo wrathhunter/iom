@@ -4,9 +4,9 @@ import { UserServiceService } from '../user-service.service';
 
 export interface PeriodicElement {
   position: number;
-  service: string;
-  branch: string;
-  deployed: string;
+  service: Service;
+  branch: ServiceBranch[];
+  deployed: ServiceBranch;
   status:string
 }
 
@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['position', 'service', 'branch', 'deployed', 'status'];
   dataSource!: MatTableDataSource<PeriodicElement>;
   env: any;
+  selectedBranch:any
 
   constructor(private userService: UserServiceService) { }
 
@@ -51,16 +52,17 @@ export class DashboardComponent implements OnInit {
         .fetchAllServicesOfaEnvironment(this.env)
         .subscribe((data) => {
           console.log(data);
-          data.environment.services.forEach((service: { branches: any[]; name: any }) => {
-            service.branches.forEach((branch: { name: any; deployed: any; state: string }) => {
+          data.environment.services.forEach((service: { branches: ServiceBranch[] ,name: string,_id: string;}) => {
+            const deployed = service.branches.find(branch => branch.deployed);
+            const deployedBranchName = deployed ? deployed : {_id: '',name: '',state: '',deployed: false,};
               this.ELEMENT_DATA.push({
                 position: this.ELEMENT_DATA.length + 1,
-                service: `${service.name}`,
-                branch:`${branch.name}`,
-                deployed: branch.deployed,
-                status: branch.state 
+                service: service,
+                branch:service.branches,
+                deployed: deployedBranchName,
+                status: deployedBranchName.state 
               });
-            });
+            
           });
           this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
         });
@@ -68,8 +70,8 @@ export class DashboardComponent implements OnInit {
       console.log(error);
     });
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }

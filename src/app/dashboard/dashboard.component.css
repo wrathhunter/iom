@@ -5,6 +5,12 @@ table {
   
   .mat-form-field {
     font-size: 14px;
-    width: 100%;
+    width: 50%;
+  }
+  .red-status {
+    color: red;
   }
   
+  .green-status {
+    color: green;
+  }
