@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Api {
   name: string;
@@ -52,7 +53,7 @@ export class DeployComponent {
     }
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private router: Router) { }
+  constructor(private fb: FormBuilder, private http: HttpClient,private router: Router,private snackBar: MatSnackBar) { }
   token = localStorage.getItem('token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -72,12 +73,15 @@ export class DeployComponent {
         const formData = api.form.value;
         // call the API with the endpoint and formData
         this.http.post(api.endpoint, formData, this.httpOptions).subscribe(response => {
-          console.log(response);
+          this.snackBar.open("Success", 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
           this.router.navigate(['/dashboard']);
         }, error => {
-          console.error(error);
+          this.snackBar.open(error.error.message, 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
         });
-        console.log(`API ${api.endpoint} called with data: `, formData);
         // reset the form
         api.form.reset();
         // close the dialog
@@ -89,12 +93,15 @@ export class DeployComponent {
         delete newObject.serviceName;
         // call the API with the endpoint and formData
         this.http.post(`${api.endpoint}/${api.form.value.serviceName}`,newObject, this.httpOptions).subscribe(response => {
-          console.log(response);
+          this.snackBar.open("Branch added successfully", 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
           this.router.navigate(['/dashboard']);
         }, error => {
-          console.error(error);
+          this.snackBar.open(error.error.message, 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
         });
-        console.log(`API ${api.endpoint} called with data: `, newObject);
         // reset the form
         api.form.reset();
         // close the dialog
@@ -110,12 +117,15 @@ export class DeployComponent {
         delete newObject.name;
         // call the API with the endpoint and formData
         this.http.post(`${api.endpoint}/${api.form.value.name}`,newObject, this.httpOptions).subscribe(response => {
-          console.log(response);
+          this.snackBar.open("Branch updated successfully", 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
           this.router.navigate(['/dashboard']);
         }, error => {
-          console.error(error);
+          this.snackBar.open(error.error.message, 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
         });
-        console.log(`API ${api.endpoint} called with data: `, newObject);
         // reset the form
         api.form.reset();
         // close the dialog
@@ -129,12 +139,15 @@ export class DeployComponent {
         const branchData = api.form.value;
         // call the API with the endpoint and formData
         this.http.post(`${api.endpoint}/${api.form.value.serviceName}`,{name:branchData.branchName}, this.httpOptions).subscribe(response => {
-          console.log(response);
+          this.snackBar.open("Branch deployed successfully", 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
           this.router.navigate(['/dashboard']);
         }, error => {
-          console.error(error);
+          this.snackBar.open(error.error.message, 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
         });
-        console.log(`API ${api.endpoint} called with data: `, branchData);
         // reset the form
         api.form.reset();
         // close the dialog
@@ -147,7 +160,6 @@ export class DeployComponent {
 
     } else {
       // display validation errors
-      console.log('Form is invalid.');
     }
   }
 }

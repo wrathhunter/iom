@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DeployComponent } from './deploy/deploy.component';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,LoginComponent, DashboardComponent, DeployComponent
@@ -34,7 +35,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatCardModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

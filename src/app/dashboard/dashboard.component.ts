@@ -46,12 +46,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.fetchEnvironment().subscribe((data) => {
-      console.log(data[0]);
+
       this.env = data[0].name;
       this.userService
         .fetchAllServicesOfaEnvironment(this.env)
         .subscribe((data) => {
-          console.log(data);
           data.services.forEach((service: { branches: ServiceBranch[] ,name: string,_id: string;}) => {
             const deployed = service.branches.find(branch => branch.deployed);
             const deployedBranchName = deployed ? deployed : {_id: '',name: '',state: '',deployed: false,};
@@ -67,7 +66,6 @@ export class DashboardComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
         });
     }, error => {
-      console.log(error);
     });
   }
   applyFilter(event: Event) {

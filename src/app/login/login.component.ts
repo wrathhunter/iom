@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -33,13 +35,16 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password)
       .subscribe(
         data => {
-          console.log(data)
+          this.snackBar.open('User logged in !', 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
           localStorage.setItem('userId',data.user._id)
           this.router.navigate(['/dashboard']);
         },
         error => {
-          console.error(error);
-          this.errorMessage = 'Failed to login. Please try again.';
+          this.snackBar.open(error.error.error, 'Close', {
+            duration: 3000, // duration in milliseconds
+          });
         }
       );
   }
