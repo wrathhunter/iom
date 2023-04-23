@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:4000/api';
+  private apiUrl = 'https://iom-be.onrender.com/api';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

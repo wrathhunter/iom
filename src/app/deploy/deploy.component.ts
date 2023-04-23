@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface Api {
   name: string;
@@ -14,7 +15,7 @@ interface Api {
 })
 export class DeployComponent {
   selectedApi!: Api;
-  private apiUrl = 'http://localhost:4000/api';
+  private apiUrl = 'https://iom-be.onrender.com/api';
   apis: Api[] = [
     {
       name: 'Add Service to Environment',
@@ -51,7 +52,7 @@ export class DeployComponent {
     }
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient,private router: Router) { }
   token = localStorage.getItem('token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -72,6 +73,7 @@ export class DeployComponent {
         // call the API with the endpoint and formData
         this.http.post(api.endpoint, formData, this.httpOptions).subscribe(response => {
           console.log(response);
+          this.router.navigate(['/dashboard']);
         }, error => {
           console.error(error);
         });
@@ -88,6 +90,7 @@ export class DeployComponent {
         // call the API with the endpoint and formData
         this.http.post(`${api.endpoint}/${api.form.value.serviceName}`,newObject, this.httpOptions).subscribe(response => {
           console.log(response);
+          this.router.navigate(['/dashboard']);
         }, error => {
           console.error(error);
         });
@@ -108,6 +111,7 @@ export class DeployComponent {
         // call the API with the endpoint and formData
         this.http.post(`${api.endpoint}/${api.form.value.name}`,newObject, this.httpOptions).subscribe(response => {
           console.log(response);
+          this.router.navigate(['/dashboard']);
         }, error => {
           console.error(error);
         });
@@ -126,6 +130,7 @@ export class DeployComponent {
         // call the API with the endpoint and formData
         this.http.post(`${api.endpoint}/${api.form.value.serviceName}`,{name:branchData.branchName}, this.httpOptions).subscribe(response => {
           console.log(response);
+          this.router.navigate(['/dashboard']);
         }, error => {
           console.error(error);
         });
