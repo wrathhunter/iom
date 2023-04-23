@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserServiceService {
 
-  private apiUrl = 'http://localhost:4000/api';
+  private apiUrl = 'https://iom-be.onrender.com/api';
   token=localStorage.getItem('token');
   private httpOptions = {
     headers: new HttpHeaders({
