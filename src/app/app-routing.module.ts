@@ -5,11 +5,12 @@ import { DeployComponent } from './deploy/deploy.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  {path: 'dashboard', component: DashboardComponent},
-  { path: 'deploy', component:DeployComponent}
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'deploy', component: DeployComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
