@@ -17,9 +17,9 @@ export class UserServiceService {
 
   constructor(private http: HttpClient) { }
   fetchEnvironment(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getAllgetAllEnvironments`, this.httpOptions);
+    return this.http.get(`${this.apiUrl}/getAllEnvironments`, this.httpOptions);
   }
-  fetchAllServicesOfaEnvironment(envId:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getAllServiceFromAnEnvironment/${envId}`, this.httpOptions);
+  fetchAllServicesOfaEnvironment(envName:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getAllServiceFromAnEnvironment/${envName}`, this.httpOptions);
   }
 }

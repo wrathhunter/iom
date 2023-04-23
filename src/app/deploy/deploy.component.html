@@ -1,0 +1,86 @@
+<mat-table [dataSource]="apis">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>API</mat-header-cell>
+    <mat-cell *matCellDef="let api">{{api.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="execute">
+    <mat-header-cell *matHeaderCellDef>Execute</mat-header-cell>
+    <mat-cell *matCellDef="let api"><button mat-raised-button color="primary"
+        (click)="openForm(api)">Execute</button></mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['name', 'execute']"></mat-header-row>
+  <mat-row *matRowDef="let api; columns: ['name', 'execute']"></mat-row>
+</mat-table>
+
+<!-- Add Service to Environment -->
+<mat-dialog-content *ngIf="selectedApi?.name === 'Add Service to Environment'">
+  <form [formGroup]="selectedApi.form" (ngSubmit)="onSubmit(selectedApi)">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Service Name">
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" color="primary">Submit</button>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<!-- Add Branch to a Service -->
+<mat-dialog-content *ngIf="selectedApi?.name === 'Add Branch to a Service'">
+  <form [formGroup]="selectedApi.form" (ngSubmit)="onSubmit(selectedApi)">
+    <mat-form-field>
+      <input matInput formControlName="serviceName" placeholder="Service Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Branch Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="state" placeholder="Branch State">
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" color="primary">Submit</button>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<!-- Update Branch of a Service -->
+<mat-dialog-content *ngIf="selectedApi?.name === 'Update Branch of a Service'">
+  <form [formGroup]="selectedApi.form" (ngSubmit)="onSubmit(selectedApi)">
+    <mat-form-field>
+      <input matInput formControlName="serviceName" placeholder="Service Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Branch Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="state" placeholder="Branch State">
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" color="primary">Submit</button>
+    </div>
+  </form>
+</mat-dialog-content>
+<!-- Deploy Branch to a Service -->
+<mat-dialog-content *ngIf="selectedApi?.name === 'Deploy Branch to a Service'">
+  <form [formGroup]="selectedApi.form" (ngSubmit)="onSubmit(selectedApi)">
+    <mat-form-field>
+      <input matInput formControlName="serviceName" placeholder="Service Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="branchName" placeholder="Branch Name">
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" color="primary">Submit</button>
+    </div>
+  </form>
+</mat-dialog-content>

@@ -47,12 +47,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchEnvironment().subscribe((data) => {
       console.log(data[0]);
-      this.env = data[0]._id;
+      this.env = data[0].name;
       this.userService
         .fetchAllServicesOfaEnvironment(this.env)
         .subscribe((data) => {
           console.log(data);
-          data.environment.services.forEach((service: { branches: ServiceBranch[] ,name: string,_id: string;}) => {
+          data.services.forEach((service: { branches: ServiceBranch[] ,name: string,_id: string;}) => {
             const deployed = service.branches.find(branch => branch.deployed);
             const deployedBranchName = deployed ? deployed : {_id: '',name: '',state: '',deployed: false,};
               this.ELEMENT_DATA.push({
